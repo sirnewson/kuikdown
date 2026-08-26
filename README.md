@@ -81,3 +81,18 @@ That builds and pushes `dist/` to `gh-pages`; Pages picks it up within a minute.
 
 `vite.config.js` sets `base` to `/kuikdown/` for project-site URLs. Building with
 `BASE_PATH=/` targets a root domain instead.
+
+### Netlify
+
+[`netlify.toml`](netlify.toml) configures it in-repo: build `npm run build`, publish
+`dist`, and `BASE_PATH=/` because Netlify serves from the domain root rather than a
+`/kuikdown/` subpath.
+
+Netlify must run the build. Publishing the repo root as-is serves the *source*
+`index.html`, whose entry point is `/src/main.jsx` — an extension Netlify has no MIME
+type for, so the browser rejects it with:
+
+> Expected a JavaScript-or-Wasm module script but the server responded with a MIME
+> type of "application/octet-stream"
+
+If you see that, the site is being served unbuilt.

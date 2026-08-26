@@ -1,0 +1,20 @@
+# Netlify serves the site at the domain root, so BASE_PATH overrides the
+# "/kuikdown/" base that GitHub Pages project sites need.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  BASE_PATH = "/"
+
+# Hashed filenames, so they can be cached forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
