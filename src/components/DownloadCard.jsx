@@ -40,7 +40,7 @@ export default function DownloadCard({ item, onDownload }) {
           </div>
 
           <h3 className="mb-2 text-xl font-bold text-white transition-colors group-hover:text-yellow-400">
-            {item.name} {item.version}
+            {item.version ? `${item.name} ${item.version}` : item.name}
           </h3>
           <p className="text-sm text-zinc-400">{item.description}</p>
         </div>
