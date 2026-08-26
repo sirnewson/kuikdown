@@ -70,8 +70,14 @@ keeps the version current for free.
 
 ## Deploying
 
-`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to
-`main`. Enable it under Settings → Pages → Build and deployment → **GitHub Actions**.
+The site is live at **https://sirnewson.github.io/kuikdown/**, served from the
+`gh-pages` branch. To ship a change:
+
+```bash
+npm run deploy
+```
+
+That builds and pushes `dist/` to `gh-pages`; Pages picks it up within a minute.
 
 `vite.config.js` sets `base` to `/kuikdown/` for project-site URLs. Building with
 `BASE_PATH=/` targets a root domain instead.
