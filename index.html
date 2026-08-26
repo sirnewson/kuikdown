@@ -1,193 +1,23 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-black text-white">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KuikDown - Instant APK Downloader</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        yellow: {
-                            400: '#facc15',
-                            500: '#eab308',
-                            600: '#ca8a04',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Lucide Icons for high quality visuals -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-        
-        .yellow-glow:hover {
-            box-shadow: 0 0 25px rgba(250, 204, 21, 0.2);
-        }
-    </style>
-</head>
-<body class="h-full flex flex-col justify-between font-sans selection:bg-yellow-400 selection:text-black">
-
-<div class="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
-    
-    <!-- Brand Header -->
-    <div class="text-center mb-12">
-        <div class="inline-flex items-center justify-center p-3.5 bg-yellow-400 text-black rounded-2xl mb-4 shadow-lg shadow-yellow-400/20">
-            <i data-lucide="zap" class="w-8 h-8 fill-black"></i>
-        </div>
-        <h1 class="text-5xl font-extrabold tracking-tight mb-2">
-            Kuik<span class="text-yellow-400">Down</span>
-        </h1>
-        <p class="text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
-            Direct, fast, and secure installation portal. One-click is all it takes.
-        </p>
-    </div>
-
-    <!-- Toast Area for Instant Actions -->
-    <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-20px] opacity-0 transition-all duration-300 pointer-events-none bg-yellow-400 text-black font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2">
-        <i data-lucide="check-circle" class="w-5 h-5"></i>
-        <span id="toast-msg">Download Started!</span>
-    </div>
-
-    <!-- Two Main Download Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-        
-        <!-- CARD 1: CRICFy APK -->
-        <div onclick="executeDownload('cricfy')" class="yellow-glow group relative bg-zinc-900 border border-zinc-800 hover:border-yellow-400 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col justify-between h-64 overflow-hidden">
-            <!-- Decorative Accent background grid -->
-            <div class="absolute right-0 top-0 translate-x-6 -translate-y-6 w-32 h-32 bg-yellow-400/5 rounded-full blur-2xl group-hover:bg-yellow-400/10 transition-all duration-300"></div>
-            
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <span class="bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 text-xs font-bold px-2.5 py-1 rounded-md">
-                        ANDROID APP (APK)
-                    </span>
-                    <i data-lucide="smartphone" class="w-6 h-6 text-zinc-500 group-hover:text-yellow-400 transition-colors"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">
-                    CRICFy v6.8
-                </h3>
-                <p class="text-zinc-400 text-sm">
-                    Latest official version. Certified safe & optimized download.
-                </p>
-            </div>
-            
-            <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60 mt-4">
-                <span class="text-xs text-zinc-500 font-mono">14.5 MB</span>
-                <div class="inline-flex items-center gap-1.5 text-xs text-yellow-400 font-bold group-hover:underline">
-                    <span>Direct Download</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 2: SportzX APK -->
-        <div onclick="executeDownload('sportzx')" class="yellow-glow group relative bg-zinc-900 border border-zinc-800 hover:border-yellow-400 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col justify-between h-64 overflow-hidden">
-            <!-- Decorative Accent background grid -->
-            <div class="absolute right-0 top-0 translate-x-6 -translate-y-6 w-32 h-32 bg-yellow-400/5 rounded-full blur-2xl group-hover:bg-yellow-400/10 transition-all duration-300"></div>
-            
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <span class="bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 text-xs font-bold px-2.5 py-1 rounded-md">
-                        ANDROID APP (APK)
-                    </span>
-                    <i data-lucide="smartphone" class="w-6 h-6 text-zinc-500 group-hover:text-yellow-400 transition-colors"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">
-                    SportzX v2.5
-                </h3>
-                <p class="text-zinc-400 text-sm">
-                    Original install package. Safe, fast, and optimized.
-                </p>
-            </div>
-            
-            <div class="flex items-center justify-between pt-4 border-t border-zinc-800/60 mt-4">
-                <span class="text-xs text-zinc-500 font-mono">12.1 MB</span>
-                <div class="inline-flex items-center gap-1.5 text-xs text-yellow-400 font-bold group-hover:underline">
-                    <span>Direct Download</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Footer -->
-<footer class="w-full text-center py-6 border-t border-zinc-900 text-zinc-600 text-xs">
-    <div class="max-w-2xl mx-auto flex items-center justify-between px-4">
-        <span>&copy; 2026 KuikDown. All rights reserved.</span>
-        <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> Secured Installation Links</span>
-    </div>
-</footer>
-
-<script>
-    // Files mapping with direct Mediafire Links and dynamic local backups
-    const filesData = {
-        cricfy: {
-            name: 'CRICFy_v6.8_new.apk',
-            url: 'https://www.mediafire.com/file/aj3ei44lk1a4ec1/CRICFy_v6.8_new.apk/file',
-            content: 'CRICFy v6.8 installation package backup'
-        },
-        sportzx: {
-            name: 'SportzX_v2.5.apk',
-            url: 'https://www.mediafire.com/file/2hc35uh370gj0ti/SportzX_v2.5.apk/file',
-            content: 'SportzX v2.5 installation package backup'
-        }
-    };
-
-    function executeDownload(fileKey) {
-        const file = filesData[fileKey];
-        if (!file) return;
-
-        // 1. Show Toast notification
-        const toast = document.getElementById('toast');
-        const toastMsg = document.getElementById('toast-msg');
-        toastMsg.innerText = `Downloading ${file.name}...`;
-        
-        // Trigger Toast Animation In
-        toast.classList.remove('opacity-0', 'translate-y-[-20px]');
-        toast.classList.add('opacity-100', 'translate-y-0');
-
-        // Dismiss Toast after 3.5 seconds
-        setTimeout(() => {
-            toast.classList.remove('opacity-100', 'translate-y-0');
-            toast.classList.add('opacity-0', 'translate-y-[-20px]');
-        }, 3500);
-
-        // 2. Open official Mediafire download tab directly in a new window/tab
-        window.open(file.url, '_blank');
-
-        // 3. Immediately trigger simulated physical browser download as a backup locally
-        setTimeout(() => {
-            try {
-                const blob = new Blob([file.content], { type: 'application/vnd.android.package-archive' });
-                const downloadUrl = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = downloadUrl;
-                a.download = file.name;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(downloadUrl);
-            } catch (err) {
-                console.error("Local file generator fallback failed, opening link instead.");
-            }
-        }, 300);
-    }
-
-    // Initialize Icons
-    window.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
-    });
-</script>
-</body>
+<!doctype html>
+<html lang="en" class="h-full bg-black">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="KuikDown — direct, fast download links for apps and installers. One click is all it takes."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>KuikDown — Instant Downloads</title>
+  </head>
+  <body class="h-full bg-black text-white">
+    <div id="root" class="h-full"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
