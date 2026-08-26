@@ -1,7 +1,7 @@
 # KuikDown
 
-A fast, no-nonsense download portal. One page, one card per file, one click to the
-real download link.
+Quick links to AI tools, software, games and apps — plus direct file downloads.
+One page, searchable, one click to the real destination.
 
 Built with React 19, Vite and Tailwind CSS v4.
 
@@ -14,45 +14,64 @@ npm run dev
 
 `npm run build` produces a static site in `dist/`, `npm run preview` serves it.
 
-## Adding a download
+## Adding an entry
 
-Everything on the page is driven by one file: [`src/data/downloads.js`](src/data/downloads.js).
-Add an object to the `downloads` array and the card appears — no other changes needed.
+Everything on the page is driven by one file: [`src/data/catalog.js`](src/data/catalog.js).
+Add an object to the `entries` array and the card appears — search, category counts
+and filters pick it up automatically.
+
+A quick link is a one-liner:
+
+```js
+link('excalidraw', 'Excalidraw', 'Hand-drawn style diagrams.', 'tools', 'https://excalidraw.com')
+```
+
+A downloadable file carries a bit more:
 
 ```js
 {
   id: 'my-app',                       // unique slug
   name: 'My App',
-  version: 'v1.0.0',
-  fileName: 'MyApp-Setup-1.0.0.exe',
+  version: 'v1.0.0',                  // optional
   description: 'One line about the file.',
+  category: 'software',               // ai | software | tools | games | apps
+  type: 'download',
+  fileName: 'MyApp-Setup-1.0.0.exe',
   size: '42 MB',
-  platform: 'windows',                // 'android' | 'windows'
-  url: 'https://…/MyApp-Setup-1.0.0.exe',
+  platform: 'windows',                // android | windows
+  url: `${RELEASE}/MyApp-Setup-1.0.0.exe`,
   sha256: 'optional checksum',        // omit to hide the checksum row
 }
 ```
 
-New platforms are added to the `platforms` map in the same file, plus an icon entry
-in [`src/components/DownloadCard.jsx`](src/components/DownloadCard.jsx).
+Categories live in the `categories` map at the top of the same file; each one needs a
+matching icon in the `icons` map in
+[`src/components/FilterBar.jsx`](src/components/FilterBar.jsx).
 
-## Hosting the files themselves
+Link cards pull their favicon from DuckDuckGo's icon service and fall back to a letter
+tile when there isn't one.
 
-The site is static — it only links out. Large binaries are best attached to a
-[GitHub release](https://github.com/sirnewson/kuikdown/releases), which allows files up
-to 2 GB each and serves them over a stable URL:
+## Hosting the files
+
+The site is static — it only links out. Large binaries are attached to a
+[GitHub release](https://github.com/sirnewson/kuikdown/releases), which allows up to
+2 GB per asset and serves a stable URL:
 
 ```bash
-gh release create v1.0.0 "path/to/Installer.exe" --title "v1.0.0" --notes "Initial release"
+gh release upload v1.0.0 "path/to/Installer.exe" --clobber
 ```
 
-Small files can instead be dropped into `public/` and linked as `/kuikdown/<file>`.
+The `RELEASE` constant at the top of `catalog.js` is the base for those URLs. Small
+files can instead go in `public/` and be linked as `/kuikdown/<file>`.
+
+Only host files you have the right to redistribute. Anything you don't, link to the
+vendor's own download page instead — that is what the `link()` entries are for, and it
+keeps the version current for free.
 
 ## Deploying
 
-Pushing to `main` builds and publishes to GitHub Pages via
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) — enable Pages
-("Build and deployment" → source **GitHub Actions**) in the repository settings first.
+`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to
+`main`. Enable it under Settings → Pages → Build and deployment → **GitHub Actions**.
 
 `vite.config.js` sets `base` to `/kuikdown/` for project-site URLs. Building with
 `BASE_PATH=/` targets a root domain instead.
